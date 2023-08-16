@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ComparisonCard from "../../components/comparisonCard/comparisonCard";
-import { DivinationCardDataTypes, Item } from "./interface";
+import { CurrencyOrFragment, ItemEntry, Props } from "./interface";
 import styles from "./divinationCardProfit.module.css";
+
+type Profit = {
+  profitValue: number;
+  profitPercentage: number;
+};
 
 const DivinationCarDProfit = ({
   divinationCardData,
@@ -19,7 +24,7 @@ const DivinationCarDProfit = ({
   uniqueWeaponData,
   uniqueArmourData,
   uniqueAccessoryData,
-}: any) => {
+}: Props) => {
   const [renderedCardsCount, setRenderedCardsCount] = useState(0);
   const [sortBy, setSortBy] = useState("value");
 
@@ -29,68 +34,41 @@ const DivinationCarDProfit = ({
     "choking-guilt",
     "the-fiend",
     "the-price-of-devotion",
+    "misery-in-darkness",
   ];
 
-  const isExcluded = (cardName: string) => {
+  const isExcluded = (cardName: string): boolean => {
     return EXCLUDED_CARDS.includes(cardName.toLowerCase().replace(/\s/g, "-"));
   };
 
-  const shouldRenderCard = (cardData: any) => {
-    if (EXCLUDED_CARDS.includes(cardData.name)) {
-      return false;
-    }
-
-    const rewardInfo = parseRewardText(cardData.explicitModifiers?.[0]?.text);
-    const formattedRewardName = rewardInfo.name
-      .toLowerCase()
-      .replace(/\s/g, "-")
-      .replace(/[{}]/g, "");
-    const items = findMatchingItems(formattedRewardName, rewardInfo.links);
-    return items.length > 0;
-  };
-
-  useEffect((): any => {
-    const count =
-      divinationCardData?.lines?.filter(shouldRenderCard).length || 0;
-    setRenderedCardsCount(count);
-  }, [
-    divinationCardData,
-    currencyData,
-    fragmentData,
-    oilData,
-    scarabData,
-    fossilData,
-    essenceData,
-    skillGemData,
-    baseTypeData,
-    uniqueMapData,
-    uniqueJewelData,
-    uniqueFlaskData,
-    uniqueWeaponData,
-    uniqueArmourData,
-    uniqueAccessoryData,
-  ]);
-
-  useEffect((): any => {
-    const count = divinationCardData?.lines?.reduce(
-      (acc: any, cardData: any) => {
-        const rewardInfo = parseRewardText(
-          cardData.explicitModifiers?.[0]?.text
-        );
-        const formattedRewardName = rewardInfo.name
-          .toLowerCase()
-          .replace(/\s/g, "-")
-          .replace(/[{}]/g, "");
-        if (isExcluded(cardData.name)) return acc;
-        const items = findMatchingItems(formattedRewardName, rewardInfo.links);
-        return items.length > 0 ? acc + 1 : acc;
-      },
-      0
-    );
+  useEffect(() => {
+    const count = divinationCardData?.lines?.reduce((acc, cardData) => {
+      const rewardInfo = parseRewardText(cardData.explicitModifiers?.[0]?.text);
+      const formattedRewardName = rewardInfo.name
+        .toLowerCase()
+        .replace(/\s/g, "-")
+        .replace(/[{}]/g, "");
+      if (isExcluded(cardData.name)) return acc;
+      const items = findMatchingItems(formattedRewardName, rewardInfo.links);
+      return items.length > 0 ? acc + 1 : acc;
+    }, 0);
     setRenderedCardsCount(count || 0);
   }, [divinationCardData]);
 
-  const findMatchingItems = (rewardInfoName: string, links?: number) => {
+  const isItemEntry = (
+    item: CurrencyOrFragment | ItemEntry
+  ): item is ItemEntry => {
+    return (
+      (item as ItemEntry).id !== undefined &&
+      (item as ItemEntry).name !== undefined &&
+      !(item as CurrencyOrFragment).currencyTypeName
+    );
+  };
+
+  const findMatchingItems = (
+    rewardInfoName: string,
+    links?: number
+  ): ItemEntry[] => {
     const allItems = [
       ...(currencyData?.lines || []),
       ...(fragmentData?.lines || []),
@@ -108,28 +86,33 @@ const DivinationCarDProfit = ({
       ...(uniqueAccessoryData?.lines || []),
     ];
 
-    return allItems.filter((item: any) => {
-      if (item.detailsId && item.detailsId.includes("-relic")) {
-        return false;
-      }
+    return allItems.filter((item) => {
+      if (isItemEntry(item)) {
+        const matchesName = (itemName: string) =>
+          itemName.toLowerCase().replace(/\s/g, "-") === rewardInfoName;
 
-      const matchesName = (itemName: string) =>
-        itemName.toLowerCase().replace(/\s/g, "-") === rewardInfoName;
-
-      if (item.currencyTypeName && matchesName(item.currencyTypeName)) {
-        return true;
-      } else if (item.name && matchesName(item.name)) {
-        if (links !== undefined) {
-          return matchesName(item.name) && item.links === links;
+        if (item.detailsId && item.detailsId.includes("-relic")) {
+          return false;
         }
 
-        if (matchesName(item.name) && !item.links) {
+        if (matchesName(item.name)) {
+          if (links !== undefined) {
+            return item.links === links;
+          }
+          if (!item.links) {
+            return true;
+          }
+        }
+      } else {
+        const matchesName = (itemName: string) =>
+          itemName.toLowerCase().replace(/\s/g, "-") === rewardInfoName;
+
+        if (item.currencyTypeName && matchesName(item.currencyTypeName)) {
           return true;
         }
-
-        return false;
       }
-    });
+      return false;
+    }) as ItemEntry[];
   };
 
   type RewardInfo = {
@@ -155,15 +138,19 @@ const DivinationCarDProfit = ({
   };
 
   const calculateProfit = (
-    divinationCard: any,
-    rewardData: any,
-    rewardQuantity: any
-  ) => {
+    divinationCard: ItemEntry,
+    rewardData: ItemEntry[],
+    rewardQuantity: number
+  ): Profit => {
+    if (!rewardData || rewardData.length === 0) {
+      return { profitValue: 0, profitPercentage: 0 };
+    }
+
     const totalCost = divinationCard.stackSize * divinationCard.chaosValue;
     const rewardValue =
-      (rewardData[0]?.currencyTypeName
-        ? rewardData[0]?.chaosEquivalent
-        : rewardData[0]?.chaosValue) || 0;
+      (rewardData[0].currencyTypeName
+        ? rewardData[0].chaosEquivalent
+        : rewardData[0].chaosValue) || 0;
     const totalReward = rewardQuantity * rewardValue;
     const profitValue = totalReward - totalCost;
     const profitPercentage = (profitValue / totalCost) * 100 - 100;
@@ -209,7 +196,7 @@ const DivinationCarDProfit = ({
       </div>
 
       <div className={styles.cardsContainer}>
-        {sortedCards.map((cardData: any) => {
+        {sortedCards.map((cardData) => {
           if (isExcluded(cardData.name)) return null;
           const rewardInfo = parseRewardText(
             cardData.explicitModifiers?.[0]?.text
