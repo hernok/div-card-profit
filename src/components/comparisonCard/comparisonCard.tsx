@@ -84,7 +84,9 @@ const ComparisonCard = ({
         </div>
 
         <div className={styles.rewardInfo}>
-          Reward: {rewardQuantity}x {itemName}
+          <h3>
+            {rewardQuantity > 1 && `${rewardQuantity} x`} {itemName}
+          </h3>
           <br />
           <img
             src={rewardData[0].icon}
