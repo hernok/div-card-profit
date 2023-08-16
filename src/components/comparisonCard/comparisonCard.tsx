@@ -1,16 +1,17 @@
 import styles from "./ComparisonCard.module.css";
+import { DivinationCardCompareProps } from "./interface";
 
 const ComparisonCard = ({
   divinationCard,
   rewardData,
   rewardQuantity,
-}: any) => {
+}: DivinationCardCompareProps) => {
   const chaos =
     "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lSZXJvbGxSYXJlIiwidyI6MSwiaCI6MSwic2NhbGUiOjF9XQ/d119a0d734/CurrencyRerollRare.png";
   const divine =
     "https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lNb2RWYWx1ZXMiLCJ3IjoxLCJoIjoxLCJzY2FsZSI6MX1d/e1a54ff97d/CurrencyModValues.png";
 
-  const getNumberColor = (value: any) => {
+  const getNumberColor = (value: number) => {
     return value >= 0 ? "green" : "red";
   };
   const totalCostChaos = divinationCard.stackSize * divinationCard.chaosValue;
