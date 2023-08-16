@@ -1,0 +1,64 @@
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 16px;
+  width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.topContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cardImage,
+.rewardImage {
+  max-height: 80px;
+  width: auto;
+  margin: 8px 0;
+}
+
+.boldNumber {
+  font-weight: bold;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.grid > div {
+  display: flex;
+  align-items: center;
+}
+
+.cardInfo,
+.rewardInfo,
+.profitInfo {
+  padding: 12px;
+}
+
+.icon {
+  margin-right: 5px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.icon {
+  margin-left: 5px;
+}
+.horizontalLine {
+  width: 100%;
+  border: 0;
+  height: 1px;
+  background: #ccc;
+  margin: 16px 0;
+}
