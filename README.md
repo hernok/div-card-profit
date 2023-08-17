@@ -15,12 +15,12 @@ This application is built using React and TypeScript. To get started:
 
 1. Setup the Environment File:
 
-Create a .env file in the root directory of the project with the following contents:
-   ```.env
-   REACT_APP_CURRENT_LEAGUE=Crucible
-   REACT_APP_BASE_URL=/api
-   ```
-   Note: Ensure that the .env file is added to your .gitignore to prevent accidentally pushing sensitive information to the repository.
+   Create a .env file in the root directory of the project with the following contents:
+      ```.env
+      REACT_APP_CURRENT_LEAGUE=Crucible
+      REACT_APP_BASE_URL=/api
+      ```
+      Note: Ensure that the .env file is added to your .gitignore to prevent accidentally pushing sensitive information to the repository.
 
 2. **Install Dependencies**:
   - npm install
