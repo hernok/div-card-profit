@@ -10,13 +10,22 @@ This application is built using React and TypeScript. To get started:
 
 1. **Clone the Repository**:
    ```bash
-   git clone [URL-to-your-repo]
-   cd [your-repo-name]   
+   git clone https://github.com/hernok/div-card-profit
+   cd div-card-profit
 
-1. **Install Dependencies**:
+1. Setup the Environment File:
+
+Create a .env file in the root directory of the project with the following contents:
+   ```.env
+   REACT_APP_CURRENT_LEAGUE=Crucible
+   REACT_APP_BASE_URL=/api
+   ```
+   Note: Ensure that the .env file is added to your .gitignore to prevent accidentally pushing sensitive information to the repository.
+
+2. **Install Dependencies**:
   - npm install
 
-2. **Start the Application**:
+3. **Start the Application**:
   - npm start
     
 Upon running the npm start command, the application should launch in your default web browser. If not, you can manually access it by navigating to http://localhost:3000/.
