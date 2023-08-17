@@ -46,7 +46,7 @@ Upon running the npm start command, the application should launch in your defaul
 ## Profit Calculation
 
 To determine profit:
-- Profit = (Number of Rewards * Price per Reward) - (Number of Cards * Price per Card)
+   Profit = (Number of Rewards * Price per Reward) - (Number of Cards * Price per Card)
 
 
 ## API Endpoints Utilized
