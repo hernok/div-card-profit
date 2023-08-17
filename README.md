@@ -13,10 +13,10 @@ This application is built using React and TypeScript. To get started:
    git clone [URL-to-your-repo]
    cd [your-repo-name]   
 
-1 **Install Dependencies**:
+1. **Install Dependencies**:
   - npm install
 
-2 **Start the Application**:
+2. **Start the Application**:
   - npm start
     
 Upon running the npm start command, the application should launch in your default web browser. If not, you can manually access it by navigating to http://localhost:3000/.
