@@ -1,5 +1,9 @@
 # Divination Card Profit Calculator
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/hernok/div-card-profit/main/public/Preview.png" width="800">
+</p>
+
 ## Description
 
    This application is designed to compare divination card prices to the price of their respective rewards, allowing users to determine potential profits.
@@ -46,7 +50,7 @@
 ## Profit Calculation
 
 To determine profit:
-   Profit = (Number of Rewards * Price per Reward) - (Number of Cards * Price per Card)
+Profit = (Number of Rewards * Price per Reward) - (Number of Cards * Price per Card)
 
 
 ## API Endpoints Utilized
@@ -68,5 +72,4 @@ To determine profit:
   - **Unique Accessories**: [Unique Accessories Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueAccessory)
 
 ## Note
-
-  The application and its data is primarily sourced from the poe.ninja API. Ensure you're aware of any limitations or terms of service when interacting with or using this data.
+The application and its data is primarily sourced from the poe.ninja API. Ensure you're aware of any limitations or terms of service when interacting with or using this data.
