@@ -1,47 +1,63 @@
-# Getting Started with Create React App
+# Divination Card Profit Calculator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+This application is designed to compare divination card prices to the price of their respective rewards, allowing users to determine potential profits.
 
-In the project directory, you can run:
+## Installation & Setup
 
-### `npm start`
+This application is built using React and TypeScript. To get started:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. **Clone the Repository**:
+   ```bash
+   git clone [URL-to-your-repo]
+   cd [your-repo-name]   
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1 **Install Dependencies**:
+  - npm install
 
-### `npm test`
+2 **Start the Application**:
+  - npm start
+    
+Upon running the npm start command, the application should launch in your default web browser. If not, you can manually access it by navigating to http://localhost:3000/.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
 
-### `npm run build`
+- **Sorting**: Users can sort data by profit. Simply click the button corresponding to the currency type (chaos or divine) you'd like to sort by.
+- **Data Fetching**: Fetch the latest data by pressing the fetch button.
+- **Data Processing**: Before comparing the data, the application processes it in the following way:
+  - Modifies item names to match divination card rewards with their actual names.
+  - If the `currencyDetails` property exists, it's removed as it's unnecessary for this application.
+  - The data within the first set of curly braces is extracted using regex and match techniques.
+  - The complete reward name is derived, taking into account all characters until a special character or the end is reached.
+  - All data types are consolidated into a singular array.
+  - The filter method is employed to pinpoint items that match specific criteria.
+  - Out of approximately 370 divination cards in the game, only 135 are rendered within the application. Most excluded cards are considered "gamble cards".
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Profit Calculation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To determine profit:
+- Profit = (Number of Rewards * Price per Reward) - (Number of Cards * Price per Card)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## API Endpoints Utilized
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- **Currency**: [Currency Endpoint](https://poe.ninja/api/data/currencyoverview?league=Blight&type=Currency)
+- **Fragment**: [Fragment Endpoint](https://poe.ninja/api/data/currencyoverview?league=Blight&type=Fragment)
+- **Oils**: [Oils Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=Oil)
+- **Scarabs**: [Scarabs Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=Scarab)
+- **Fossils**: [Fossils Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=Fossil)
+- **Essence**: [Essence Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=Essence)
+- **Divination Cards**: [Divination Cards Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=DivinationCard)
+- **Skill Gems**: [Skill Gems Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=SkillGem)
+- **Base Types**: [Base Types Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=BaseType)
+- **Unique Maps**: [Unique Maps Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueMap)
+- **Unique Jewels**: [Unique Jewels Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueJewel)
+- **Unique Flasks**: [Unique Flasks Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueFlask)
+- **Unique Weapons**: [Unique Weapons Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueWeapon)
+- **Unique Armours**: [Unique Armours Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueArmour)
+- **Unique Accessories**: [Unique Accessories Endpoint](https://poe.ninja/api/data/itemoverview?league=Blight&type=UniqueAccessory)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Note
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-# div-card-profit
+The application and its data is primarily sourced from the poe.ninja API. Ensure you're aware of any limitations or terms of service when interacting with or using this data.
