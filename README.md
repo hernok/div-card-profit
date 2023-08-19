@@ -21,7 +21,7 @@
 
    Create a .env file in the root directory of the project with the following contents:
       ```.env
-      REACT_APP_CURRENT_LEAGUE=Crucible
+      REACT_APP_CURRENT_LEAGUE=Ancestor
       REACT_APP_BASE_URL=/api
       ```
       Note: Ensure that the .env file is added to your .gitignore to prevent accidentally pushing sensitive information to the repository.
